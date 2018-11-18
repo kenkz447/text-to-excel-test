@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 const XLSX = window['XLSX']
 class App extends Component {
@@ -14,7 +13,7 @@ class App extends Component {
             onChange={(e) => this.setState({ content: e.target.value })}
           />
         </div>
-        <button onClick={this.click}>X</button>
+        <button onClick={this.click}>To excel</button>
       </div>
     );
   }
@@ -23,7 +22,7 @@ class App extends Component {
     const json = this.parserJson()
     console.log(json);
 
-    var ws = XLSX.utils.json_to_sheet(json, { header: ["Họ tên", "Ngày sinh", "Địa chỉ", "Điện thoại", "Email", "Nội dung"] });
+    var ws = XLSX.utils.json_to_sheet(json);
 
     var wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'xxx');
@@ -62,10 +61,6 @@ class App extends Component {
         const value = text.split(':')[1]
 
         let keyParsered = key.replace('-', '').trim()
-        if (keyParsered === 'Tiêu đề') {
-          keyParsered = "Nội dung"
-        }
-        
         json[keyParsered] = value
       }
       jsons.push(json)
